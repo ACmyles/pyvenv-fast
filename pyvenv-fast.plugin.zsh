@@ -10,29 +10,29 @@ function pv_CreatePyVenvInNewDirectory(){
     echo ".$pvf_dir" >> .pyvenvdir
 }
 
-function pv_EvalulateOptionalFlags(){
-    while getopts 'v:' OPTION; do
-        case "$OPTION" in
-            v)
-                PYTHON_VERSION=${OPTARG}
-                echo ${PYTHON_VERSION}
-            ;;
-        esac
-    done
-}
-
-function pvf(){
+function pv_t(){
+    local PYTHON_VERSION="python3.10"
+    local args=("$@")
+    local pvf_dir=${args[-1]}
+    
+    # exit if no args
     if [ ! $1 ]
     then
         echo "No arguments provided."
         return
     fi
     
-    local PYTHON_VERSION="python3.9"
-    pv_EvalulateOptionalFlags $args
-    local args=("$@")
-    local pvf_dir=${args[-1]}
+    # check for flags
+    while getopts 'v:' OPTION; do
+        case "$OPTION" in
+            v) # python version flag -v
+                PYTHON_VERSION=${OPTARG}
+                echo ${PYTHON_VERSION}
+            ;;
+        esac
+    done
     
+    # call in current or new dir
     if [ "$pvf_dir" = "." ]
     then
         pv_CreatePyVenvInCurrentDirectory
