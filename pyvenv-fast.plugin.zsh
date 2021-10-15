@@ -10,7 +10,7 @@ function pv_CreatePyVenvInNewDirectory(){
     echo ".$pvf_dir" >> .pyvenvdir
 }
 
-function pv_t(){
+function pv(){
     local PYTHON_VERSION="python3.10"
     local args=("$@")
     local pvf_dir=${args[-1]}
@@ -18,7 +18,7 @@ function pv_t(){
     # exit if no args
     if [ ! $1 ]
     then
-        echo "No arguments provided."
+        echo "usage: pv [-v] directory"
         return
     fi
     
@@ -27,7 +27,7 @@ function pv_t(){
         case "$OPTION" in
             v) # python version flag -v
                 PYTHON_VERSION=${OPTARG}
-                echo ${PYTHON_VERSION}
+                echo "Using ${PYTHON_VERSION}..."
             ;;
         esac
     done
