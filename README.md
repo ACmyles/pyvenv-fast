@@ -2,9 +2,13 @@
 
 A zsh plugin to launch a Python venv with one command.
 
+Designed for use with [dotpyvenv](https://github.com/jeanpantoja/dotpyvenv) (auto venv activation on navigation).
+
 ## Features
 
 - Launch a Python venv in current directory or mkcd a new directory.
+- Set venv name the same as directory with a dot before - eg `.new_proj`
+- Create .pyvenvdir to point to venv directory.
 - Specify Python version.
 
 ## Installation
