@@ -14,8 +14,9 @@ Designed for use with [dotpyvenv](https://github.com/jeanpantoja/dotpyvenv) (aut
 ## Installation
 
 ```shell
-sh <(curl -sL https://raw.githubusercontent.com/ACmyles/pyvenv-fast/master/install.sh)>
+sh <(curl -sL https://raw.githubusercontent.com/ACmyles/pyvenv-fast/master/install.sh)
 ```
+    Add pyvenv-fast to plugins in `.zshrc`
 
 ## Usage
 

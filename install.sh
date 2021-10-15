@@ -1,3 +1,5 @@
+#!/bin/sh
+
 echo "Installing pyvenv-fast..."
 
 # download latest from github, output to zsh custom
