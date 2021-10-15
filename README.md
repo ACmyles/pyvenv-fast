@@ -13,10 +13,13 @@ Designed for use with [dotpyvenv](https://github.com/jeanpantoja/dotpyvenv) (aut
 
 ## Installation
 
+### Oh My Zsh
+
 ```shell
-sh <(curl -sL https://raw.githubusercontent.com/ACmyles/pyvenv-fast/master/install.sh)
+git clone https://github.com/ACmyles/pyvenv-fast.git ~/.oh-my-zsh/custom/plugins/pyvenv-fast
 ```
-    Add pyvenv-fast to plugins in `.zshrc`
+
+Add pyvenv-fast to plugins in `.zshrc`
 
 ## Usage
 
