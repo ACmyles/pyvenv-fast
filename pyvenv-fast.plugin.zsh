@@ -1,55 +1,54 @@
 function pv_GenerateGitIgnore(){
     echo ".pyvenvdir" >> .gitignore
-    echo "/.${pvf_dir}" >> .gitignore
+    echo "/.${call_state[pv_directory]}" >> .gitignore
 }
 
 function pv_CreatePyVenvInCurrentDirectory(){
-    $PYTHON_VERSION -m venv ".${PWD##*/}"
+    ${call_state[python_version]} -m venv ".${PWD##*/}"
     echo ".${PWD##*/}" >> .pyvenvdir
-    if [ git_ignore ]; then
-        pv_GenerateGitIgnore
-    fi
 }
 
 function pv_CreatePyVenvInNewDirectory(){
-    mkdir -p $pvf_dir
-    cd $pvf_dir
-    $PYTHON_VERSION -m venv ".$pvf_dir"
-    echo ".$pvf_dir" >> .pyvenvdir
-    if [ git_ignore ]; then
-        pv_GenerateGitIgnore
-    fi
+    mkdir -p ${call_state[pv_directory]}
+    cd ${call_state[pv_directory]}
+    ${call_state[python_version]} -m venv ".${call_state[pv_directory]}"
+    echo ".${call_state[pv_directory]}" >> .pyvenvdir
 }
 
 function pv(){
-    local PYTHON_VERSION="python3.10"
-    local args=("$@")
-    local pvf_dir=${args[-1]}
-    local git_ignore=false
+    declare -A local call_state
+    call_state[pv_directory]=${argv[-1]}
+    call_state[python_version]="python3.10"
+    call_state[git_ignore]=false
+    
     
     # exit if no args
-    if [ ! $1 ]; then
+    if [ ! ${1} ]; then
         echo "usage: pv [-v] directory"
         return
     fi
     
     # check for flags
     while getopts 'v:g' OPTION; do
-        case "$OPTION" in
+        case "${OPTION}" in
             v) # python version flag -v
-                PYTHON_VERSION=${OPTARG}
-                echo "Using ${PYTHON_VERSION}..."
+                call_state[python_version]=${OPTARG}
+                echo "Using ${call_state[python_version]}..."
             ;;
-            g)
-                git_ignore=true
+            g) # git ignore append flag -g
+                call_state[git_ignore]=true
             ;;
         esac
     done
     
     # call in current or new dir
-    if [ "$pvf_dir" = "." ]; then
+    if [ "${call_state[pv_directory]}" = "." ]; then
         pv_CreatePyVenvInCurrentDirectory
     else
-        pv_CreatePyVenvInNewDirectory $pvf_dir
+        pv_CreatePyVenvInNewDirectory ${call_state[pv_directory]}
+    fi
+    
+    if [ ${call_state[git_ignore]} ]; then
+        pv_GenerateGitIgnore
     fi
 }
