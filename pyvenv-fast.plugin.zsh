@@ -28,7 +28,7 @@ function pv(){
     # create call state dictionary key:value store
     declare -A local pv_call_keys
     pv_call_keys[pv_directory]=${argv[-1]}
-    pv_call_keys[python_version]="python3.10"
+    pv_call_keys[python_version]="python3.11"
     pv_call_keys[git_ignore]=false
     
     # evaluate flags
